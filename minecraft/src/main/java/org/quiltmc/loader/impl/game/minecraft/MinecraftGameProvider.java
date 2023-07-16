@@ -518,10 +518,21 @@ public class MinecraftGameProvider implements GameProvider {
 
 		Log.debug(LogCategory.GAME_PROVIDER, "Launching using target class '" + targetClass + "'");
 
+		Log.debug(LogCategory.GAME_PROVIDER, "Launch arguments: "+ Arrays.toString(arguments.toArray()));
+
+		//direct launch args
+		String[] args = new String[2];
+		args[0] = arguments.getOrDefault("username",null);
+		args[1] = arguments.getOrDefault("session","");
+
 		try {
 			Class<?> c = loader.loadClass(targetClass);
 			Method m = c.getMethod("main", String[].class);
-			m.invoke(null, (Object) arguments.toArray());
+			if(targetClass.equals("net.minecraft.client.Minecraft")){ //direct launch
+				m.invoke(null, (Object) args);
+			} else {
+				m.invoke(null, (Object) arguments.toArray());
+			}
 		} catch (InvocationTargetException e) {
 			throw new FormattedException("Minecraft has crashed!", e.getCause());
 		} catch (ReflectiveOperationException e) {
