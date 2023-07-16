@@ -104,6 +104,11 @@ dependencies {
 	compileOnly "org.quiltmc.chasm:chasm:${project.quilt_chasm}"
 	compileOnly "org.quiltmc.chasm:chassembly:${project.quilt_chasm}"
 
+	var log4jVersion = "2.20.0"
+	implementation("org.apache.logging.log4j:log4j-core:${log4jVersion}")
+	implementation("org.apache.logging.log4j:log4j-api:${log4jVersion}")
+	implementation("org.apache.logging.log4j:log4j-1.2-api:${log4jVersion}")
+	implementation("log4j:apache-log4j-extras:1.2.17")
 
 	shadow "com.electronwill.night-config:core:${project.night_config}"
 	shadow "com.electronwill.night-config:toml:${project.night_config}"
